@@ -5,7 +5,7 @@ This setup will deploy a web application (https://hello.chirag.tr-talent.de) whi
 
 ##  Setup:
 I have tried to keep the setup bare minimum to efficiantly run the required components.
-1. The `Terraform` setup contains the configuration for VPC, Subnets, Bashion, ECR and S3.
+1. The `Terraform` setup contains the configuration for VPC, Subnets, Routes, Bastion host, ECR and S3.
 2. the rest of the setup has been done utilizing `Kops` to create the kubernetes cluster and on top of it, we deployed our docker image through AWS ECR.
 3. The private subnets are used to house the control plane and worker nodes and public one can be used for the bashion host to further manage the kubernetes environment.
 4. SSL offloading is done on the Loabbalancer using the domain certificate (created with ACM)
@@ -17,7 +17,7 @@ I have tried to keep the setup bare minimum to efficiantly run the required comp
 ```
 1. Terraform Version: v0.14.11
 2. Utilized Base Image: nginx:latest
-3. SSH Private key for both master/node and bashion are shared via email.
+3. SSH Private key for master/workers are shared via email.
 4. Used AWS region - eu-central-1
 ```
 
@@ -29,7 +29,7 @@ I have tried to keep the setup bare minimum to efficiantly run the required comp
 
 `(I). Base Infra with Terraform: `
 Created the base infrastructure that includes VPC, Subnets, route tables, EIP, NAT GW, IGW.
-This will make use of the VPC module I have created in the modules/ dir.
+This will make use of the VPC module I have created in the ./modules/ dir.
 ```
 $terraform init && terraform apply
 ```
@@ -53,7 +53,7 @@ $terraform init && terraform apply
    --subnets subnet-##,subnet-##  \
    --utility-subnets subnet-#,subnet-##
    
-2. Make sure to add the existing egress (nat gateways) for private subnets using the below command and save the file
+2. Make sure to add the existing egress configuration in the `subnets` section for private subnets using the below command and save the file
 kops edit cluster chirag.tr-talent.de
 
 3. kops update cluster --name chirag.tr-talent.de --yes --admin
