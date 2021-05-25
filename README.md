@@ -100,8 +100,10 @@ Done!!
 
 
 ##### References:
+```
 The nginx.conf and mime.types are pulled with few modifications from the h5bp Nginx boilerplate project at
 https://github.com/h5bp/server-configs-nginx
+```
 ------------
 
 
