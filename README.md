@@ -80,7 +80,8 @@ Make sure you have docker running on your system.
 kubectl apply -f deployment.yml
 kubectl create -f service.yml
 (check for the external name for nginx-lb)
-kubectl get svc
+kubectl get svc 
+(update the correct certificate arn in the service.yml during deploy)
 Once the dns record for LB is ready, use it as a target and create a CNAME(hello.chirag.tr-talent.de)
 wait for 5 min for the DNS propogation.
 Test the setup with the below domain:
